@@ -7,35 +7,53 @@
 
 import SwiftUI
 
-extension Character: Identifiable {
-    public var id: UInt8 {
-        self.asciiValue!
-    }
-}
 
 struct KeyboardKeyRow: View {
-    let letters: [Character]
-    let action: (Character) -> Void
+    private let letters: [Character]
+    private let action: (Character) -> Void
+    private let usedLetters: [UsedLetter]
     
-    init(letters: String, action: @escaping (Character) -> Void) {
+    init(letters: String, usedLetters: [UsedLetter], action: @escaping (Character) -> Void) {
         self.letters = Array(letters)
         self.action = action
+        self.usedLetters = usedLetters
     }
     
     var body: some View {
         HStack(spacing: 2) {
             ForEach(letters) { letter in
-                KeyboardButton(letter: letter) { letter in
+                Button {
                     action(letter)
+                } label: {
+                    Text("\(String(letter))")
+                        .foregroundColor(.white)
+                        .frame(width: 30, height: 40)
+                        .background(backgroundColour(keyboardLetter: letter))
+                        .cornerRadius(10)
                 }
             }
         }
     }
 }
 
+private extension KeyboardKeyRow {
+    func backgroundColour(keyboardLetter: Character) -> Color {
+        if !usedLetters.map(\.letter).contains(keyboardLetter) {
+            return .blue
+        }
+        let index = usedLetters.map(\.letter).firstIndex(of: keyboardLetter)
+        switch usedLetters[index!].location {
+        case .correct: return .green
+        case .incorrect: return .orange
+        case .notInSecret: return .gray
+        }
+    }
+}
+
 struct KeyboardKeyRow_Previews: PreviewProvider {
+    static let secretWord = "shock"
     static var previews: some View {
-        KeyboardKeyRow(letters: "qwertyuiop") { letter in
+        KeyboardKeyRow(letters: "qwertyuiop", usedLetters: []) { letter in
             
         }
     }

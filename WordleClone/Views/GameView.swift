@@ -35,8 +35,9 @@ struct GameView: View {
                 Button("Restart") {
                     viewModel.resetGame()
                 }
+                .buttonStyle(.borderedProminent)
             }
-            KeyboardView(text: $viewModel.currentWord) {
+            KeyboardView(text: $viewModel.currentWord, usedLetters: Array(viewModel.usedLetters)) {
                 viewModel.addWord()
             }
         }

@@ -8,44 +8,57 @@
 import SwiftUI
 
 struct KeyboardView: View {
-    @Binding var text: String
-    let onSubmit: () -> Void
+    @Binding private var text: String
+    private let usedLetters: [UsedLetter]
+    private let onSubmit: () -> Void
+    
+    init(text: Binding<String>, usedLetters: [UsedLetter], onSubmit: @escaping () -> Void) {
+        _text = text
+        self.usedLetters = usedLetters
+        self.onSubmit =  onSubmit
+    }
     
     var body: some View {
         VStack {
-            HStack {
-                KeyboardKeyRow(letters: "qwertyuiop") { letter in
-                    text.append(letter)
+            ForEach(KeyboardRow.allCases) { keyboardRow in
+                HStack {
+                    KeyboardKeyRow(letters: keyboardRow.keys, usedLetters: usedLetters) { letter in
+                        text.append(letter)
+                    }
+                    .disabled(text.count == 5)
+                    
+                    if keyboardRow == .qwerRow {
+                        backspaceButton
+                    }
+                    
+                    if keyboardRow == .asdfRow {
+                        submitButton
+                    }
                 }
-                .disabled(text.count == 5)
-                Button {
-                    text.removeLast()
-                } label: {
-                    Label("Backspace", systemImage: "delete.left")
-                        .labelStyle(.iconOnly)
-                }
-                .disabled(text.isEmpty)
             }
-            
-            HStack {
-                KeyboardKeyRow(letters: "asdfghjkl") { letter in
-                    text.append(letter)
-                }
-                .disabled(text.count == 5)
-                Button {
-                    onSubmit()
-                } label: {
-                    Label("Submit", systemImage: "return")
-                        .labelStyle(.iconOnly)
-                }
-                .disabled(text.count != 5)
-            }
-            
-            KeyboardKeyRow(letters: "zxcvbnm") { letter in
-                text.append(letter)
-            }
-            .disabled(text.count == 5)
         }
+    }
+}
+
+private extension KeyboardView {
+    var backspaceButton: some View {
+        Button {
+            text.removeLast()
+        } label: {
+            Label("Backspace", systemImage: "delete.left")
+                .labelStyle(.iconOnly)
+        }
+        .disabled(text.isEmpty)
+    }
+    
+    var submitButton: some View {
+        Button {
+            onSubmit()
+        } label: {
+            Label("Submit", systemImage: "return")
+                .labelStyle(.iconOnly)
+        }
+        .disabled(text.count != 5)
     }
 }
 
@@ -54,7 +67,7 @@ struct KeyboardView_Previews: PreviewProvider {
         @State private var text = ""
         
         var body: some View {
-            KeyboardView(text: $text) {
+            KeyboardView(text: $text, usedLetters: []) {
                 
             }
         }
