@@ -21,7 +21,6 @@
 		21B513CF2983E018001B7645 /* SubmittedWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B513CE2983E018001B7645 /* SubmittedWordView.swift */; };
 		21B513D12983E096001B7645 /* WordInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B513D02983E096001B7645 /* WordInputView.swift */; };
 		21CF98972984E9BE00847C0E /* KeyboardRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF98962984E9BE00847C0E /* KeyboardRow.swift */; };
-		21CF989A2984E9F400847C0E /* Character+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF98992984E9F400847C0E /* Character+Identifiable.swift */; };
 		21CF989C2984EAB300847C0E /* UsedLetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF989B2984EAB300847C0E /* UsedLetter.swift */; };
 /* End PBXBuildFile section */
 
@@ -60,7 +59,6 @@
 		21B513CE2983E018001B7645 /* SubmittedWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmittedWordView.swift; sourceTree = "<group>"; };
 		21B513D02983E096001B7645 /* WordInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordInputView.swift; sourceTree = "<group>"; };
 		21CF98962984E9BE00847C0E /* KeyboardRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardRow.swift; sourceTree = "<group>"; };
-		21CF98992984E9F400847C0E /* Character+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+Identifiable.swift"; sourceTree = "<group>"; };
 		21CF989B2984EAB300847C0E /* UsedLetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsedLetter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -181,7 +179,6 @@
 		21CF98982984E9E500847C0E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				21CF98992984E9F400847C0E /* Character+Identifiable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -317,7 +314,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				21079AEC2983BBCE00A82D31 /* GameViewModel.swift in Sources */,
-				21CF989A2984E9F400847C0E /* Character+Identifiable.swift in Sources */,
 				21B513CF2983E018001B7645 /* SubmittedWordView.swift in Sources */,
 				21079AC02983B86200A82D31 /* ContentView.swift in Sources */,
 				21079AE92983BB9F00A82D31 /* GameView.swift in Sources */,

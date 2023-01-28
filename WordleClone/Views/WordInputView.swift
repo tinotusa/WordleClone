@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct WordInputView: View {
-    let word: String
-    let emptySpaces: String
+    private let word: String
+    private let emptySpaces: String
     
     init(word: String) {
         self.word = word
@@ -19,7 +19,7 @@ struct WordInputView: View {
     
     var body: some View {
         HStack {
-            ForEach(Array(word)) { letter in
+            ForEach(Array(word), id: \.self) { letter in
                 Text(String(letter))
                     .frame(width: 40, height: 40)
                     .background(.white)
@@ -31,7 +31,7 @@ struct WordInputView: View {
                     }
             }
             
-            ForEach(Array(emptySpaces)) { space in
+            ForEach(Array(emptySpaces), id: \.self) { _ in
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(lineWidth: 2)
                     .foregroundColor(.gray)

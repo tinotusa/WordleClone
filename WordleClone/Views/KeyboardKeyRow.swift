@@ -7,25 +7,24 @@
 
 import SwiftUI
 
-
 struct KeyboardKeyRow: View {
-    private let letters: [Character]
+    private let letters: String
     private let action: (Character) -> Void
     private let usedLetters: [UsedLetter]
     
     init(letters: String, usedLetters: [UsedLetter], action: @escaping (Character) -> Void) {
-        self.letters = Array(letters)
+        self.letters = letters
         self.action = action
         self.usedLetters = usedLetters
     }
     
     var body: some View {
         HStack(spacing: 2) {
-            ForEach(letters) { letter in
+            ForEach(Array(letters), id: \.self) { letter in
                 Button {
                     action(letter)
                 } label: {
-                    Text("\(String(letter))")
+                    Text(String(letter))
                         .foregroundColor(.white)
                         .frame(width: 30, height: 40)
                         .background(backgroundColour(keyboardLetter: letter))
