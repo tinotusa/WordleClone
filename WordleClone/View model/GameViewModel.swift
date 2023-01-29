@@ -84,5 +84,6 @@ extension GameViewModel {
         gameIsOver = false
         secretWord = "shock" // TODO: get other words
         usedLetters = []
+        usedWordLetters = []
     }
 }
