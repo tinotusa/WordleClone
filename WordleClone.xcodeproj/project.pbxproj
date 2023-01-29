@@ -20,6 +20,7 @@
 		21079AF02983BD1D00A82D31 /* KeyboardKeyRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21079AEF2983BD1D00A82D31 /* KeyboardKeyRow.swift */; };
 		2148CF0629863F470067C97C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2148CF0529863F470067C97C /* Constants.swift */; };
 		2148CF08298640A30067C97C /* BoxedLetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2148CF07298640A30067C97C /* BoxedLetterView.swift */; };
+		2148CF0A298666950067C97C /* Animation+rotate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2148CF09298666950067C97C /* Animation+rotate.swift */; };
 		21B513CF2983E018001B7645 /* SubmittedWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B513CE2983E018001B7645 /* SubmittedWordView.swift */; };
 		21B513D12983E096001B7645 /* WordInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B513D02983E096001B7645 /* WordInputView.swift */; };
 		21CF98972984E9BE00847C0E /* KeyboardRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF98962984E9BE00847C0E /* KeyboardRow.swift */; };
@@ -60,6 +61,7 @@
 		21079AEF2983BD1D00A82D31 /* KeyboardKeyRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardKeyRow.swift; sourceTree = "<group>"; };
 		2148CF0529863F470067C97C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2148CF07298640A30067C97C /* BoxedLetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxedLetterView.swift; sourceTree = "<group>"; };
+		2148CF09298666950067C97C /* Animation+rotate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Animation+rotate.swift"; sourceTree = "<group>"; };
 		21B513CE2983E018001B7645 /* SubmittedWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmittedWordView.swift; sourceTree = "<group>"; };
 		21B513D02983E096001B7645 /* WordInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordInputView.swift; sourceTree = "<group>"; };
 		21CF98962984E9BE00847C0E /* KeyboardRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardRow.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 		21CF98982984E9E500847C0E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				2148CF09298666950067C97C /* Animation+rotate.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 				21CF989C2984EAB300847C0E /* UsedLetter.swift in Sources */,
 				2148CF08298640A30067C97C /* BoxedLetterView.swift in Sources */,
 				21079AEE2983BCBF00A82D31 /* KeyboardView.swift in Sources */,
+				2148CF0A298666950067C97C /* Animation+rotate.swift in Sources */,
 				21079ABE2983B86200A82D31 /* WordleCloneApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

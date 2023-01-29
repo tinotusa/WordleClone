@@ -9,12 +9,18 @@ import SwiftUI
 
 struct SubmittedWordView: View {
     let usedLetters: [UsedLetter]
+    @State private var isAnimating = false
     
     var body: some View {
         HStack {
-            ForEach(usedLetters) { letter in
+            ForEach(Array(usedLetters.enumerated()), id: \.offset) { index, letter in
                 BoxedLetterView(letter: letter.letter, backgroundColour: letter.location.colour)
+                    .rotation3DEffect(.degrees(isAnimating ? 360 : 180), axis: (x: 0, y: 1, z: 0))
+                    .animation(.rotate(index: index), value: isAnimating)
             }
+        }
+        .onAppear {
+            isAnimating = true
         }
     }
 }
