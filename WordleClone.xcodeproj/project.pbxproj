@@ -18,6 +18,8 @@
 		21079AEC2983BBCE00A82D31 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21079AEB2983BBCE00A82D31 /* GameViewModel.swift */; };
 		21079AEE2983BCBF00A82D31 /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21079AED2983BCBF00A82D31 /* KeyboardView.swift */; };
 		21079AF02983BD1D00A82D31 /* KeyboardKeyRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21079AEF2983BD1D00A82D31 /* KeyboardKeyRow.swift */; };
+		2148CF0629863F470067C97C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2148CF0529863F470067C97C /* Constants.swift */; };
+		2148CF08298640A30067C97C /* BoxedLetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2148CF07298640A30067C97C /* BoxedLetterView.swift */; };
 		21B513CF2983E018001B7645 /* SubmittedWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B513CE2983E018001B7645 /* SubmittedWordView.swift */; };
 		21B513D12983E096001B7645 /* WordInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B513D02983E096001B7645 /* WordInputView.swift */; };
 		21CF98972984E9BE00847C0E /* KeyboardRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CF98962984E9BE00847C0E /* KeyboardRow.swift */; };
@@ -56,6 +58,8 @@
 		21079AEB2983BBCE00A82D31 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
 		21079AED2983BCBF00A82D31 /* KeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
 		21079AEF2983BD1D00A82D31 /* KeyboardKeyRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardKeyRow.swift; sourceTree = "<group>"; };
+		2148CF0529863F470067C97C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2148CF07298640A30067C97C /* BoxedLetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxedLetterView.swift; sourceTree = "<group>"; };
 		21B513CE2983E018001B7645 /* SubmittedWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmittedWordView.swift; sourceTree = "<group>"; };
 		21B513D02983E096001B7645 /* WordInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordInputView.swift; sourceTree = "<group>"; };
 		21CF98962984E9BE00847C0E /* KeyboardRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardRow.swift; sourceTree = "<group>"; };
@@ -155,6 +159,7 @@
 				21079AEF2983BD1D00A82D31 /* KeyboardKeyRow.swift */,
 				21B513CE2983E018001B7645 /* SubmittedWordView.swift */,
 				21B513D02983E096001B7645 /* WordInputView.swift */,
+				2148CF07298640A30067C97C /* BoxedLetterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -172,6 +177,7 @@
 			children = (
 				21CF98962984E9BE00847C0E /* KeyboardRow.swift */,
 				21CF989B2984EAB300847C0E /* UsedLetter.swift */,
+				2148CF0529863F470067C97C /* Constants.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -314,6 +320,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				21079AEC2983BBCE00A82D31 /* GameViewModel.swift in Sources */,
+				2148CF0629863F470067C97C /* Constants.swift in Sources */,
 				21B513CF2983E018001B7645 /* SubmittedWordView.swift in Sources */,
 				21079AC02983B86200A82D31 /* ContentView.swift in Sources */,
 				21079AE92983BB9F00A82D31 /* GameView.swift in Sources */,
@@ -321,6 +328,7 @@
 				21079AF02983BD1D00A82D31 /* KeyboardKeyRow.swift in Sources */,
 				21CF98972984E9BE00847C0E /* KeyboardRow.swift in Sources */,
 				21CF989C2984EAB300847C0E /* UsedLetter.swift in Sources */,
+				2148CF08298640A30067C97C /* BoxedLetterView.swift in Sources */,
 				21079AEE2983BCBF00A82D31 /* KeyboardView.swift in Sources */,
 				21079ABE2983B86200A82D31 /* WordleCloneApp.swift in Sources */,
 			);

@@ -17,14 +17,14 @@ struct GameView: View {
                 .font(.title)
             ZStack (alignment: .top) {
                 VStack {
-                    ForEach(0 ..< 5) { _ in
+                    ForEach(0 ..< GameViewModel.maxSecretWordLetterCount, id: \.self) { _ in
                         WordInputView(word: "")
                     }
                 }
                 
                 VStack {
-                    ForEach(viewModel.words, id: \.self) { word in
-                        SubmittedWordView(wordInput: word, correctWord: viewModel.secretWord)
+                    ForEach(viewModel.usedWordLetters, id: \.self) { word in
+                        SubmittedWordView(usedLetters: word)
                     }
                     WordInputView(word: viewModel.currentWord)
                 }

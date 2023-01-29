@@ -25,7 +25,7 @@ struct KeyboardView: View {
                     KeyboardKeyRow(letters: keyboardRow.keys, usedLetters: usedLetters) { letter in
                         text.append(letter)
                     }
-                    .disabled(text.count == 5)
+                    .disabled(text.count == GameViewModel.maxSecretWordLetterCount)
                     
                     if keyboardRow == .qwerRow {
                         backspaceButton
@@ -58,7 +58,7 @@ private extension KeyboardView {
             Label("Submit", systemImage: "return")
                 .labelStyle(.iconOnly)
         }
-        .disabled(text.count != 5)
+        .disabled(text.count != GameViewModel.maxSecretWordLetterCount)
     }
 }
 

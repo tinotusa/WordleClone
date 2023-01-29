@@ -8,47 +8,65 @@
 import SwiftUI
 
 struct SubmittedWordView: View {
-    private let wordInput: String
-    private let correctWord: [Character]
-    
-    init(wordInput: String, correctWord: String) {
-        self.wordInput = wordInput
-        self.correctWord = Array(correctWord)
-    }
+    let usedLetters: [UsedLetter]
     
     var body: some View {
         HStack {
-            ForEach(Array(wordInput.enumerated()), id: \.offset) { index, letter in
-                Text(String(letter))
-                    .foregroundColor(.white)
-                    .frame(width: 40, height: 40)
-                    .background(backgroundColour(for: index, letter: letter))
-                    .cornerRadius(10)
+            ForEach(usedLetters) { letter in
+                BoxedLetterView(letter: letter.letter, backgroundColour: letter.location.colour)
             }
         }
-    }
-    
-    func backgroundColour(for index: Int, letter: Character) -> Color {
-        if correctWord[index] == letter {
-            return .green
-        }
-        if correctWord.contains(letter) {
-            return .yellow
-        }
-        return .gray
     }
 }
 
 struct SubmittedWordView_Previews: PreviewProvider {
     static let wordInput = "tests"
     static let correctWord = "shock"
+    static func letterLocation(index: Int, letter: Character, correctWord: String) -> UsedLetter.LetterLocation {
+        let correctWord = Array(correctWord)
+        if correctWord[index] == letter {
+            return .correct
+        }
+        if correctWord.contains(letter) {
+            return .incorrect
+        }
+        return .notInSecret
+    }
     
     static var previews: some View {
         VStack {
-            SubmittedWordView(wordInput: "testi", correctWord: correctWord)
-            SubmittedWordView(wordInput: "howdy", correctWord: correctWord)
-            SubmittedWordView(wordInput: "quake", correctWord: correctWord)
-            SubmittedWordView(wordInput: "shock", correctWord: correctWord)
+            SubmittedWordView(
+                usedLetters: "testi".enumerated().map {
+                    UsedLetter(
+                        letter: $0.element,
+                        location: letterLocation(index: $0.offset, letter: $0.element, correctWord: correctWord)
+                    )
+                }
+            )
+            SubmittedWordView(
+                usedLetters: "howdy".enumerated().map {
+                    UsedLetter(
+                        letter: $0.element,
+                        location: letterLocation(index: $0.offset, letter: $0.element, correctWord: correctWord)
+                    )
+                }
+            )
+            SubmittedWordView(
+                usedLetters: "quake".enumerated().map {
+                    UsedLetter(
+                        letter: $0.element,
+                        location: letterLocation(index: $0.offset, letter: $0.element, correctWord: correctWord)
+                    )
+                }
+            )
+            SubmittedWordView(
+                usedLetters: "shock".enumerated().map {
+                    UsedLetter(
+                        letter: $0.element,
+                        location: letterLocation(index: $0.offset, letter: $0.element, correctWord: correctWord)
+                    )
+                }
+            )
         }
     }
 }

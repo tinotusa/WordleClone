@@ -9,35 +9,39 @@ import SwiftUI
 
 struct WordInputView: View {
     private let word: String
-    private let emptySpaces: String
+    private let emptySpaces: Int
     
     init(word: String) {
         self.word = word
-        let remainingSpots = 5 - word.count
-        emptySpaces = String(repeating: " ", count: remainingSpots)
+        emptySpaces = GameViewModel.maxSecretWordLetterCount - word.count
     }
     
     var body: some View {
         HStack {
             ForEach(Array(word), id: \.self) { letter in
-                Text(String(letter))
-                    .frame(width: 40, height: 40)
-                    .background(.white)
-                    .foregroundColor(.black)
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(lineWidth: 2)
-                            .foregroundColor(.gray)
-                    }
+                BoxedLetterView(
+                    letter: letter,
+                    foregroundColour: .black,
+                    backgroundColour: .white
+                )
+                .overlay {
+                    roundedRectangle
+                }
             }
             
-            ForEach(Array(emptySpaces), id: \.self) { _ in
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(lineWidth: 2)
-                    .foregroundColor(.gray)
-                    .frame(width: 40, height: 40)
+            ForEach(0 ..< emptySpaces, id: \.self) { _ in
+                roundedRectangle
             }
         }
+    }
+}
+
+private extension WordInputView {
+    var roundedRectangle: some View {
+        RoundedRectangle(cornerRadius: Constants.cornerRadius)
+            .stroke(lineWidth: 2)
+            .foregroundColor(.gray)
+            .frame(width: Constants.letterWidth, height: Constants.letterHeight)
     }
 }
 

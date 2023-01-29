@@ -28,7 +28,7 @@ struct KeyboardKeyRow: View {
                         .foregroundColor(.white)
                         .frame(width: 30, height: 40)
                         .background(backgroundColour(keyboardLetter: letter))
-                        .cornerRadius(10)
+                        .cornerRadius(Constants.cornerRadius)
                 }
             }
         }
@@ -37,15 +37,10 @@ struct KeyboardKeyRow: View {
 
 private extension KeyboardKeyRow {
     func backgroundColour(keyboardLetter: Character) -> Color {
-        if !usedLetters.map(\.letter).contains(keyboardLetter) {
-            return .blue
+        if let index = usedLetters.map(\.letter).firstIndex(of: keyboardLetter) {
+            return usedLetters[index].location.colour
         }
-        let index = usedLetters.map(\.letter).firstIndex(of: keyboardLetter)
-        switch usedLetters[index!].location {
-        case .correct: return .green
-        case .incorrect: return .orange
-        case .notInSecret: return .gray
-        }
+        return .blue
     }
 }
 
