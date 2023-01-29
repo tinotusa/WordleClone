@@ -16,6 +16,7 @@ struct SubmittedWordView: View {
             ForEach(Array(usedLetters.enumerated()), id: \.offset) { index, letter in
                 BoxedLetterView(letter: letter.letter, backgroundColour: letter.location.colour)
                     .rotation3DEffect(.degrees(isAnimating ? 360 : 180), axis: (x: 0, y: 1, z: 0))
+                    .opacity(isAnimating ? 1 : 0)
                     .animation(.rotate(index: index), value: isAnimating)
             }
         }
