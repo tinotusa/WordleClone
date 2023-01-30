@@ -6,30 +6,47 @@
 //
 
 import XCTest
+@testable import WordleClone
 
 final class GameViewModelTests: XCTestCase {
-
+    var viewModel: GameViewModel!
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        viewModel = GameViewModel()
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    func testAddWordWithEmptyCurrentWord() {
+        // current word is not set
+        viewModel.addWord()
+        XCTAssertTrue(viewModel.usedWordLetters.isEmpty, "Expected the used word letter array to be empty")
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    
+    func testAddWordWithWordThatExceedsLimit() {
+        viewModel.currentWord = "daskjlfdsjfasdfj"
+        viewModel.addWord()
+        XCTAssertTrue(viewModel.usedWordLetters.isEmpty)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    func testAddWordSuccessfully() {
+        viewModel.currentWord = "asdfg"
+        viewModel.addWord()
+        XCTAssertEqual(viewModel.usedWordLetters.count, 1)
     }
-
+    
+    func testResetGame() {
+        viewModel.currentWord = "testi"
+        viewModel.addWord()
+        XCTAssertEqual(viewModel.usedLetters.count, 4, "Expected the used letters count to be 4.")
+        viewModel.currentWord = "shock"
+        viewModel.addWord()
+        XCTAssertEqual(viewModel.usedWordLetters.count, 2,  "Expected the usedWordLetters count to be 2.")
+        XCTAssertTrue(viewModel.gameIsOver, "Expected the game to be over since the secret word was found.")
+        
+        viewModel.resetGame()
+        
+        XCTAssertTrue(viewModel.currentWord.isEmpty, "Expected the current word to be empty after calling resetGame")
+        XCTAssertTrue(viewModel.usedLetters.isEmpty, "Expected the usedLetters to be empty after calling resetGame")
+        XCTAssertTrue(viewModel.usedWordLetters.isEmpty, "Expected usedWordLetters to be empty after calling resetGame")
+        XCTAssertFalse(viewModel.gameIsOver, "Expected the gameIsOver to be false after calling resetGame")
+    }
 }
