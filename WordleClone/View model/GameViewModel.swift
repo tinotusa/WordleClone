@@ -35,7 +35,7 @@ extension GameViewModel {
     /// to see if the word is correct
     func addWord() {
         log.log("Adding word: \(self.currentWord)")
-        if currentWord.count < Self.maxSecretWordLetterCount {
+        if currentWord.count != Self.maxSecretWordLetterCount {
             log.log("Failed to add word. Invalid word count")
             return
         }
