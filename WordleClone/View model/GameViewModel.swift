@@ -10,12 +10,18 @@ import os
 
 /// View model for `GameView`.
 final class GameViewModel: ObservableObject {
+    /// The current word input.
     @Published var currentWord = ""
+    /// An array of the submitted words as `UsedLetter`
     @Published private(set) var usedWordLetters = [[UsedLetter]]()
+    /// An array of the letters the user has already used.
     @Published private(set) var usedLetters = Set<UsedLetter>()
+    /// A boolean value indicating whether the game is over.
     @Published private(set) var gameIsOver = false
     
+    /// The word the user is trying to guess.
     private(set) var secretWord = "shock"
+    /// The max length of the `secretWord`./
     private(set) static var maxSecretWordLetterCount = 5
     
     private let log = Logger(
@@ -57,10 +63,24 @@ extension GameViewModel {
         log.log("Successfully added word \(self.currentWord) to words array.")
     }
     
+    /// Resets the state of the game back to the starting point.
+    func resetGame() {
+        log.log("Reseting the game.")
+        currentWord = ""
+        gameIsOver = false
+        secretWord = "shock" // TODO: get other words
+        usedLetters = []
+        usedWordLetters = []
+    }
+}
+
+// MARK: - Private functions
+private extension GameViewModel {
     /// Gets the UsedLetters for the given word
     /// - Parameter currentWord: The string to get the used letter from.
     /// - Returns: An array of `UsedLetter`.
     func usedLetters(for currentWord: String) -> [UsedLetter] {
+        log.log("Getting used letters for word: \(currentWord)")
         var usedLetters = [UsedLetter]()
         let secretWordArray = Array(secretWord)
         currentWord.enumerated().forEach { index, letter in
@@ -75,15 +95,5 @@ extension GameViewModel {
             usedLetters.append(.init(letter: letter, location: location))
         }
         return usedLetters
-    }
-    
-    /// Resets the state of the game back to the starting point.
-    func resetGame() {
-        log.log("Reseting the game.")
-        currentWord = ""
-        gameIsOver = false
-        secretWord = "shock" // TODO: get other words
-        usedLetters = []
-        usedWordLetters = []
     }
 }
