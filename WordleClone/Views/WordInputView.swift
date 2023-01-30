@@ -18,7 +18,7 @@ struct WordInputView: View {
     
     var body: some View {
         HStack {
-            ForEach(Array(word), id: \.self) { letter in
+            ForEach(Array(word.enumerated()), id: \.offset) { _, letter in
                 BoxedLetterView(
                     letter: letter,
                     foregroundColour: .black,
