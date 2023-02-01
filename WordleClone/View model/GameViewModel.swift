@@ -24,6 +24,8 @@ final class GameViewModel: ObservableObject {
     @Published private(set) var secretWord = "shock"
     /// The max length of the `secretWord`./
     private(set) static var maxSecretWordLetterCount = 5
+    private(set) var attemptsCount = 0
+    @Published private(set) var userGuessedWord = false
     
     private let log = Logger(
         subsystem: Bundle.main.bundleIdentifier!,
@@ -60,7 +62,7 @@ extension GameViewModel {
             log.log("Failed to add word. Invalid word count")
             return
         }
-
+        attemptsCount += 1
         usedWordLetters.append(usedLetters(for: currentWord))
         let secretWordArray = Array(secretWord)
         currentWord.enumerated().forEach { index, letter in
@@ -77,6 +79,12 @@ extension GameViewModel {
             
             usedLetters.insert(.init(letter: letter, location: location))
         }
+        
+        if attemptsCount == Self.maxSecretWordLetterCount {
+            userGuessedWord = false
+            gameIsOver = true
+        }
+        
         if currentWord == secretWord {
             gameIsOver = true
         }

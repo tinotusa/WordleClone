@@ -26,12 +26,19 @@ struct GameView: View {
                     ForEach(viewModel.usedWordLetters, id: \.self) { word in
                         SubmittedWordView(usedLetters: word)
                     }
-                    WordInputView(word: viewModel.currentWord)
+                    if !viewModel.gameIsOver {
+                        WordInputView(word: viewModel.currentWord)
+                    }
                 }
             }
             
             Spacer()
             if viewModel.gameIsOver {
+                if !viewModel.userGuessedWord {
+                    Text("The word was: \(viewModel.secretWord).")
+                } else {
+                    Text("You got it!")
+                }
                 Button("Restart") {
                     viewModel.resetGame()
                 }
