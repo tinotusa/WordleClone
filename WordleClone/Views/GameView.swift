@@ -43,6 +43,9 @@ struct GameView: View {
             .disabled(viewModel.gameIsOver)
         }
         .padding()
+        .onAppear {
+            viewModel.getSecretWord()
+        }
     }
 }
 

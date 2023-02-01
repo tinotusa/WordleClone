@@ -18,9 +18,10 @@ final class GameViewModel: ObservableObject {
     @Published private(set) var usedLetters = Set<UsedLetter>()
     /// A boolean value indicating whether the game is over.
     @Published private(set) var gameIsOver = false
-    
+    /// The previously used secret word.
+    private var previousWord: String?
     /// The word the user is trying to guess.
-    private(set) var secretWord = "shock"
+    @Published private(set) var secretWord = "shock"
     /// The max length of the `secretWord`./
     private(set) static var maxSecretWordLetterCount = 5
     
@@ -31,6 +32,26 @@ final class GameViewModel: ObservableObject {
 }
 
 extension GameViewModel {
+    /// Sets a secretWord to a new word.
+    func getSecretWord() {
+        guard let url = Bundle.main.url(forResource: "allWords", withExtension: "txt") else {
+            log.error("Failed to open allWords.txt")
+            return
+        }
+        
+        do {
+            let words = try String(contentsOf: url).split(separator: "\n")
+            var randomWord = ""
+            repeat {
+                randomWord = String(words.randomElement()!)
+            } while randomWord == previousWord
+            previousWord = secretWord
+            secretWord = randomWord
+        } catch {
+            log.error("Failed to get secret word. \(error)")
+        }
+    }
+    
     /// Adds a word to the list of words and checks
     /// to see if the word is correct
     func addWord() {
@@ -68,7 +89,8 @@ extension GameViewModel {
         log.log("Reseting the game.")
         currentWord = ""
         gameIsOver = false
-        secretWord = "shock" // TODO: get other words
+        secretWord = ""
+        getSecretWord()
         usedLetters = []
         usedWordLetters = []
     }
