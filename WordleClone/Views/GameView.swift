@@ -40,6 +40,7 @@ struct GameView: View {
             KeyboardView(text: $viewModel.currentWord, usedLetters: Array(viewModel.usedLetters)) {
                 viewModel.addWord()
             }
+            .disabled(viewModel.gameIsOver)
         }
         .padding()
     }
