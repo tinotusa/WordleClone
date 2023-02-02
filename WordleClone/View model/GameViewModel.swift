@@ -19,41 +19,30 @@ final class GameViewModel: ObservableObject {
     /// A boolean value indicating whether the game is over.
     @Published private(set) var gameIsOver = false
     /// The previously used secret word.
-    private var previousWord: String?
+    private var previousWords: Set<String> = []
     /// The word the user is trying to guess.
-    @Published private(set) var secretWord = "shock"
-    /// The max length of the `secretWord`./
+    @Published private(set) var secretWord = ""
+    /// The max length of the `secretWord`.
     private(set) static var maxSecretWordLetterCount = 5
+    /// The number of attempts the user has.
     private(set) var attemptsCount = 0
+    /// A boolean value indicating whether the user has guessed the word.
     @Published private(set) var userGuessedWord = false
+    /// All the words available.
+    private var words = Set<String>()
     
     private let log = Logger(
         subsystem: Bundle.main.bundleIdentifier!,
         category: String(describing: GameViewModel.self)
     )
+    
+    init() {
+        getWords()
+        getSecretWord()
+    }
 }
 
 extension GameViewModel {
-    /// Sets a secretWord to a new word.
-    func getSecretWord() {
-        guard let url = Bundle.main.url(forResource: "allWords", withExtension: "txt") else {
-            log.error("Failed to open allWords.txt")
-            return
-        }
-        
-        do {
-            let words = try String(contentsOf: url).split(separator: "\n")
-            var randomWord = ""
-            repeat {
-                randomWord = String(words.randomElement()!)
-            } while randomWord == previousWord
-            previousWord = secretWord
-            secretWord = randomWord
-        } catch {
-            log.error("Failed to get secret word. \(error)")
-        }
-    }
-    
     /// Adds a word to the list of words and checks
     /// to see if the word is correct
     func addWord() {
@@ -80,16 +69,17 @@ extension GameViewModel {
             usedLetters.insert(.init(letter: letter, location: location))
         }
         
-        if attemptsCount == Self.maxSecretWordLetterCount {
+        if attemptsCount >= Self.maxSecretWordLetterCount {
             userGuessedWord = false
             gameIsOver = true
-        }
-        
-        if currentWord == secretWord {
+            log.log("Game is over user didn't guess the word in time.")
+        } else if currentWord == secretWord {
             gameIsOver = true
+            log.log("Game is over user guess the word.")
+        } else {
+            currentWord = ""
+            log.log("Successfully added word \(self.currentWord) to words array.")
         }
-        currentWord = ""
-        log.log("Successfully added word \(self.currentWord) to words array.")
     }
     
     /// Resets the state of the game back to the starting point.
@@ -101,11 +91,39 @@ extension GameViewModel {
         getSecretWord()
         usedLetters = []
         usedWordLetters = []
+        attemptsCount = 0
     }
 }
 
 // MARK: - Private functions
 private extension GameViewModel {
+    /// Gets all the words from file.
+    private func getWords() {
+        guard let url = Bundle.main.url(forResource: "allWords", withExtension: "txt") else {
+            log.error("Failed to open allWords.txt")
+            return
+        }
+        
+        do {
+            let words = try String(contentsOf: url).split(separator: "\n")
+            self.words = Set(words.map(String.init))
+            log.log("Successfully got words. \(self.words.count) words set.")
+        } catch {
+            log.error("Failed to get words. \(error)")
+        }
+    }
+
+    /// Sets a secretWord to a new word.
+    func getSecretWord() {
+        log.log("Getting random word.")
+        var randomWord = ""
+        repeat {
+            randomWord = String(words.randomElement()!)
+        } while previousWords.contains(randomWord)
+        previousWords.insert(secretWord)
+        secretWord = randomWord
+    }
+
     /// Gets the UsedLetters for the given word
     /// - Parameter currentWord: The string to get the used letter from.
     /// - Returns: An array of `UsedLetter`.
