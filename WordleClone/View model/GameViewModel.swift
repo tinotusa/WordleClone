@@ -5,7 +5,7 @@
 //  Created by Tino on 27/1/2023.
 //
 
-import Foundation
+import SwiftUI
 import os
 
 /// View model for `GameView`.
@@ -28,6 +28,10 @@ final class GameViewModel: ObservableObject {
     private(set) var attemptsCount = 0
     /// A boolean value indicating whether the user has guessed the word.
     @Published private(set) var userGuessedWord = false
+    /// A boolean value indicating whether the word entered is in the dictionary.
+    @Published var wordIsInDictionary = true
+    /// The text checker for the users word inputs.
+    private var textChecker = UITextChecker()
     /// All the words available.
     private var words = Set<String>()
     
@@ -49,6 +53,25 @@ extension GameViewModel {
         log.log("Adding word: \(self.currentWord)")
         if currentWord.count != Self.maxSecretWordLetterCount {
             log.log("Failed to add word. Invalid word count")
+            return
+        }
+        guard let range = currentWord.range(of: currentWord) else {
+            log.error("Failed to get range of word.")
+            return
+        }
+        let misspellRange = textChecker.rangeOfMisspelledWord(
+            in: currentWord,
+            range: NSRange(range, in: currentWord),
+            startingAt: 0,
+            wrap: false,
+            language: Locale.current.language.languageCode?.identifier ?? "en"
+        )
+        
+        if misspellRange.location != NSNotFound {
+            log.log("\(self.currentWord) is not a valid word.")
+            withAnimation {
+                wordIsInDictionary = false
+            }
             return
         }
         attemptsCount += 1

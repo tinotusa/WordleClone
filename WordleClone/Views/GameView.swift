@@ -44,10 +44,16 @@ struct GameView: View {
                 }
                 .buttonStyle(.borderedProminent)
             }
+            if !viewModel.wordIsInDictionary {
+                Text(#""\#(viewModel.currentWord)" is not a word."#)
+            }
             KeyboardView(text: $viewModel.currentWord, usedLetters: Array(viewModel.usedLetters)) {
                 viewModel.addWord()
             }
             .disabled(viewModel.gameIsOver)
+            .onChange(of: viewModel.currentWord) { _ in
+                viewModel.wordIsInDictionary = true
+            }
         }
         .padding()
     }
