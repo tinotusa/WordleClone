@@ -25,7 +25,7 @@ final class GameViewModel: ObservableObject {
     /// The max length of the `secretWord`.
     private(set) static var maxSecretWordLetterCount = 5
     /// The number of attempts the user has.
-    private(set) var attemptsCount = 0
+    private(set) var attemptsLeft = GameViewModel.maxSecretWordLetterCount
     /// A boolean value indicating whether the user has guessed the word.
     @Published private(set) var userGuessedWord = false
     /// A boolean value indicating whether the word entered is in the dictionary.
@@ -47,6 +47,9 @@ final class GameViewModel: ObservableObject {
 }
 
 extension GameViewModel {
+    var hasAttemptsLeft: Bool {
+        attemptsLeft != 0
+    }
     /// Adds a word to the list of words and checks
     /// to see if the word is correct
     func addWord() {
@@ -66,7 +69,6 @@ extension GameViewModel {
             wrap: false,
             language: Locale.current.language.languageCode?.identifier ?? "en"
         )
-        
         if misspellRange.location != NSNotFound {
             log.log("\(self.currentWord) is not a valid word.")
             withAnimation {
@@ -74,7 +76,7 @@ extension GameViewModel {
             }
             return
         }
-        attemptsCount += 1
+        attemptsLeft -= 1
         usedWordLetters.append(usedLetters(for: currentWord))
         let secretWordArray = Array(secretWord)
         currentWord.enumerated().forEach { index, letter in
@@ -92,7 +94,7 @@ extension GameViewModel {
             usedLetters.insert(.init(letter: letter, location: location))
         }
         
-        if attemptsCount >= Self.maxSecretWordLetterCount {
+        if attemptsLeft <= 0 {
             userGuessedWord = false
             gameIsOver = true
             log.log("Game is over user didn't guess the word in time.")
@@ -114,7 +116,7 @@ extension GameViewModel {
         getSecretWord()
         usedLetters = []
         usedWordLetters = []
-        attemptsCount = 0
+        attemptsLeft = Self.maxSecretWordLetterCount
     }
 }
 

@@ -15,24 +15,21 @@ struct GameView: View {
         VStack {
             Text("Wordle!")
                 .font(.title)
-            ZStack (alignment: .top) {
-                VStack {
-                    ForEach(0 ..< GameViewModel.maxSecretWordLetterCount, id: \.self) { _ in
-                        WordInputView(word: "")
-                    }
-                }
-                
-                VStack {
-                    ForEach(viewModel.usedWordLetters, id: \.self) { word in
-                        SubmittedWordView(usedLetters: word)
-                    }
-                    if !viewModel.gameIsOver {
-                        WordInputView(word: viewModel.currentWord)
-                    }
+            
+            ForEach(viewModel.usedWordLetters, id: \.self) { word in
+                SubmittedWordView(usedLetters: word)
+            }
+            
+            if viewModel.hasAttemptsLeft {
+                WordInputView(word: viewModel.currentWord)
+                ForEach(0 ..< viewModel.attemptsLeft - 1, id: \.self) { _ in
+                    WordInputView(word: "")
                 }
             }
             
+            
             Spacer()
+            
             if viewModel.gameIsOver {
                 if !viewModel.userGuessedWord {
                     Text("The word was: \(viewModel.secretWord).")
@@ -44,9 +41,11 @@ struct GameView: View {
                 }
                 .buttonStyle(.borderedProminent)
             }
+            
             if !viewModel.wordIsInDictionary {
                 Text(#""\#(viewModel.currentWord)" is not a word."#)
             }
+            
             KeyboardView(text: $viewModel.currentWord, usedLetters: Array(viewModel.usedLetters)) {
                 viewModel.addWord()
             }
