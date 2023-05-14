@@ -101,10 +101,12 @@ extension GameViewModel {
         } else if currentWord == secretWord {
             gameIsOver = true
             log.log("Game is over user guess the word.")
+            userGuessedWord = true
         } else {
-            currentWord = ""
             log.log("Successfully added word \(self.currentWord) to words array.")
         }
+        
+        currentWord = ""
     }
     
     /// Resets the state of the game back to the starting point.
